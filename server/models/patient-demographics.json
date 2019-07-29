@@ -1,0 +1,93 @@
+{
+  "name": "PatientDemographics",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "http": {
+    "path": "/patientdemographics"
+  },
+  "mysql": {
+    "schema": "MasterDB",
+    "table": "Patient_Demographics"
+  },
+  "properties": {
+    "PatientId": {
+      "type": "number",
+      "id": true,
+      "required": true
+    },
+    "Dob": {
+      "type": "date",
+      "required": true
+    },
+    "Age": {
+      "type": "number",
+      "required": true
+    },
+    "Gender": {
+      "type": "string",
+      "required": true
+    },
+
+    "MaritalStatus": {
+      "type": "string",
+      "required": true
+    },
+    "BloodGroup": {
+      "type": "string",
+      "required": true
+    },
+    "CreateDate": {
+      "type": "date",
+      "required": false
+    },
+    "CreateBy": {
+      "type": "number",
+      "required": false
+    },
+    "ModifyBy": {
+      "type": "number",
+      "required": false
+    },
+    "ModifyDate": {
+      "type": "date",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "replaceOnPUT": true,
+  "methods": {
+    "getDemographicsById": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "number",
+          "required": true,
+          "description": "Patient id for which Demographics should be generated",
+          "http": {
+            "source": "path"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "patientDetails",
+          "type": "object",
+          "root": true,
+          "description": "Demographics data of the patient.."
+        }
+      ],
+      "description": "Getting patient demographics details by their id",
+      "http": [
+        {
+          "path": "/:id",
+          "verb": "get"
+        }
+      ]
+    }
+  }
+}
