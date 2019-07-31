@@ -79,6 +79,7 @@ module.exports = function (PatientDemographics) {
       let Patients = loopback.getModel('Patients');
       let patientDetailsResult = await Patients.find();
       let demographicsResult = await PatientDemographics.find();
+
       let patientDetails = patientDetailsResult.map(patientDetails => (
         {
           id: patientDetails.PatientId,
@@ -92,8 +93,11 @@ module.exports = function (PatientDemographics) {
             by: patientDetails.ModifyBy,
             on: patientDetails.ModifyDate
           }
-        }
-      ));
+        }));
+
+      //var result = patientDetails;
+      //console.log('result=>', result);
+
       let demographics = demographicsResult.map(demographics => (
         {
           id: demographics.PatientId,
@@ -112,14 +116,7 @@ module.exports = function (PatientDemographics) {
           }
         }
       ));
-      var addDemographics = (patients) => {
-        patients.map(
-          patient => {
-
-            patient.demographics = demographics.filter(demo => demo.id == patient.id);
-
-          })
-      }
+     patientDetails.map(patient => {patient.demographics = demographics.find(demo => demo.id == patient.id)});
 
 
 
@@ -127,7 +124,7 @@ module.exports = function (PatientDemographics) {
         throw new Error(`Patients doesn't Exists!`);
       }
       else {
-        addDemographics(patientDetails);
+
         return patientDetails;
       };
     }
