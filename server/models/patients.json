@@ -48,7 +48,30 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "patientDemographics": {
+      "type": "hasOne",
+      "model": "PatientDemographics",
+      "foreignKey": "PatientId"
+    }
+  },
   "acls": [],
-  "methods": {}
+  "methods": {
+    "getPatientDemographics": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "array",
+          "root": true,
+          "description": "Result of patients details"
+        }
+      ],
+      "description": "for Getting all patient details",
+      "http": [{
+        "path": "/details",
+        "verb": "get"
+      }]
+    }
+  }
 }

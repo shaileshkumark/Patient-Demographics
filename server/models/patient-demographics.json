@@ -12,6 +12,7 @@
     "schema": "MasterDB",
     "table": "Patient_Demographics"
   },
+  "replaceOnPUT": true,
   "properties": {
     "PatientId": {
       "type": "number",
@@ -30,7 +31,6 @@
       "type": "string",
       "required": true
     },
-
     "MaritalStatus": {
       "type": "string",
       "required": true
@@ -57,15 +57,21 @@
     }
   },
   "validations": [],
-  "relations": {},
+  
+  "relations": {
+    "patients": {
+      "type": "belongsTo",
+      "model": "Patients",
+      "foreignKey": "PatientId"
+    }
+  },
   "acls": [],
-  "replaceOnPUT": true,
   "methods": {
     "getDemographicsById": {
       "accepts": [
         {
           "arg": "id",
-          "type": "number",
+          "type": "string",
           "required": true,
           "description": "Patient id for which Demographics should be generated",
           "http": {
@@ -85,6 +91,24 @@
       "http": [
         {
           "path": "/:id",
+          "verb": "get"
+        }
+      ]
+    },
+    "GetDemographics": {
+      "accepts": [],
+      "returns": [
+        {
+          "arg": "patientsDemographics",
+          "type": "object",
+          "root": true,
+          "description": "All patient's demographics details"
+        }
+      ],
+      "description": "Get all patients demographics",
+      "http": [
+        {
+          "path": "/all",
           "verb": "get"
         }
       ]
